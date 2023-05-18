@@ -1,0 +1,95 @@
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  padding: 15px;
+  background-color: lightsteelblue;
+}
+
+header > div {
+  justify-content: flex-end;
+  flex-direction: row;
+  color: white;
+}
+
+body {
+  margin: 0;
+  display: grid;
+  grid-template-rows: auto;
+  background-color: slategray;
+}
+
+main {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 30px;
+  gap: 100px;
+  height: 100vh;
+  grid-template-columns: 2fr 1fr;
+}
+
+#gameBoard {
+  display: grid;
+  grid-template-rows: 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px;
+  justify-content: center;
+  background-color: darkslategrey;
+  border: 2px solid;
+  border-radius: 10%;
+  border-color: lightgrey;
+  width: 500px;
+  padding: 10px;
+  gap: 20px;
+}
+
+#gameBoard > div {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  align-content: center;
+  padding: 20px;
+  gap: 30px;
+}
+
+#gameBoard > div > div {
+  border-radius: 50%;
+  border: 20px solid;
+  color: white;
+}
+
+.divContainer {
+  align-content: center;
+  align-items: center;
+  background-color: white;
+  border-radius: 5%;
+  padding: 10px;
+}
+
+.selectionPegs {
+  flex-direction: row;
+  justify-content: center;
+  border-radius: 50%;
+  border: 5px solid;
+}
+
+#redPeg {
+  background-color: palevioletred;
+}
+
+#yellowPeg {
+  background-color: lemonchiffon;
+}
+
+#bluePeg {
+  background-color: lightskyblue;
+}
+
+#greenPeg {
+  background-color: lightgreen;
+}
+
+.buttons {
+  width: fit-content;
+}

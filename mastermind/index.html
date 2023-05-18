@@ -2,11 +2,95 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="stylesheet" href="style.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mastermind</title>
   </head>
   <body>
+    <header id="title">
+      <div><h1>Mastermind</h1></div>
+    </header>
+    <main>
+      <section>
+        <div id="gameBoard" class=".flex-ctr">
+          <div>
+            <div id="col1row1"></div>
+            <div id="col1row2"></div>
+            <div id="col1row3"></div>
+            <div id="col1row4"></div>
+          </div>
+          <div>
+            <div id="col2row1"></div>
+            <div id="col2row2"></div>
+            <div id="col2row3"></div>
+            <div id="col2row4"></div>
+          </div>
+          <div>
+            <div id="col3row1"></div>
+            <div id="col3row2"></div>
+            <div id="col3row3"></div>
+            <div id="col3row4"></div>
+          </div>
+          <div>
+            <div id="col4row1"></div>
+            <div id="col4row2"></div>
+            <div id="col4row3"></div>
+            <div id="col4row4"></div>
+          </div>
+          <div>
+            <div id="col5row1"></div>
+            <div id="col5row2"></div>
+            <div id="col5row3"></div>
+            <div id="col5row4"></div>
+          </div>
+          <div>
+            <div id="col6row1"></div>
+            <div id="col6row2"></div>
+            <div id="col6row3"></div>
+            <div id="col6row4"></div>
+          </div>
+          <div>
+            <div id="col7row1"></div>
+            <div id="col7row2"></div>
+            <div id="col7row3"></div>
+            <div id="col7row4"></div>
+          </div>
+          <div>
+            <div id="col8row1"></div>
+            <div id="col8row2"></div>
+            <div id="col8row3"></div>
+            <div id="col8row4"></div>
+          </div>
+          <div>
+            <div id="col9row1"></div>
+            <div id="col9row2"></div>
+            <div id="col9row3"></div>
+            <div id="col9row4"></div>
+          </div>
+          <div>
+            <div id="col10row1"></div>
+            <div id="col10row2"></div>
+            <div id="col10row3"></div>
+            <div id="col10row4"></div>
+          </div>
+        </div>
+      </section>
+      <section>
+        <div class="divContainer">
+          <div><p>Can you guess the secret code?</p></div>
+          <div id="selectionPegs">
+            <div class="redPeg"></div>
+            <div class="yellowPeg"></div>
+            <div class="bluePeg"></div>
+            <div class="greenPeg"></div>
+          </div>
+          <div class="buttons">
+            <button id="check">Check</button>
+            <button id="resetGame">Reset Game</button>
+          </div>
+        </div>
+      </section>
+    </main>
     <div id="app"></div>
     <script type="module" src="/main.js"></script>
   </body>
