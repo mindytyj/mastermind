@@ -34,60 +34,77 @@ main {
 #gameBoard {
   display: grid;
   grid-template-rows: 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px;
-  justify-content: center;
+  align-content: center;
   background-color: darkslategrey;
   border: 2px solid;
-  border-radius: 10%;
+  border-radius: 8%;
   border-color: lightgrey;
   width: 500px;
   padding: 10px;
-  gap: 20px;
+  gap: 25px;
 }
 
 #gameBoard > div {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
-  align-content: center;
   padding: 20px;
-  gap: 30px;
+  gap: 25px;
 }
 
 #gameBoard > div > div {
+  justify-content: space-evenly;
   border-radius: 50%;
   border: 20px solid;
   color: white;
 }
 
+#gameBoard > div > .sidePegs {
+  justify-content: end;
+  gap: 5px;
+  border: 8px solid;
+  color: white;
+}
+
 .divContainer {
-  align-content: center;
-  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   background-color: white;
   border-radius: 5%;
+  margin: 10px;
   padding: 10px;
 }
 
-.selectionPegs {
-  flex-direction: row;
+.divContainer > .selectionPegs {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
   justify-content: center;
-  border-radius: 50%;
-  border: 5px solid;
+  gap: 10px;
 }
 
 #redPeg {
-  background-color: palevioletred;
+  border-radius: 50%;
+  border: 20px solid;
+  color: red;
 }
 
 #yellowPeg {
-  background-color: lemonchiffon;
+  border-radius: 50%;
+  border: 20px solid;
+  color: yellow;
 }
 
 #bluePeg {
-  background-color: lightskyblue;
+  border-radius: 50%;
+  border: 20px solid;
+  color: blue;
 }
 
 #greenPeg {
-  background-color: lightgreen;
+  border-radius: 50%;
+  border: 20px solid;
+  color: lawngreen;
 }
 
 .buttons {
