@@ -1,10 +1,22 @@
+/* Gameplay
+1. Computer to generate a random secret code
+2. Player to select the colour pegs
+2.1 Selected colour pegs will reflect on the main peg board
+2.2 Player to click on the check button once 4 coloured pegs are selected
+2.3 Check button to push the selected colours into board array and check for winning conditions
+3. If player's coloured pegs includes the colour but is in the wrong position, side peg to turn black.
+3.1 If player's coloured pegs is the right colour in the right position, side peg to turn red
+4. Player to continue the game until winning condition is met.
+5. Once player wins/lose, output div to unhide gameMessage class and winning message is reflected to player
+6. Player to click on reset game button to reset the game board, game message and secret code.
+*/
+
 /*----- constants -----*/
 
 /*----- state variables -----*/
 const game = {
+  secretCode: [],
   board: [],
-  turn: null,
-  winner: null,
   message: "",
 };
 
@@ -16,16 +28,15 @@ const checkSelection = document.querySelector("#check");
 /*----- event listeners -----*/
 
 /*----- functions -----*/
-function render() {
+
+const render = () => {
   renderBoard();
   renderMessage();
-}
+};
 
-function renderBoard() {
-  gameBoard.innerHTML = "";
-}
+const init = () => {
+  game.secretCode = [null, null, null, null];
 
-function init() {
   game.board = [
     [null, null, null, null],
     [null, null, null, null],
@@ -38,17 +49,27 @@ function init() {
     [null, null, null, null],
     [null, null, null, null],
   ];
+};
 
-  turn = "player";
+const generateRandomCode = () => {
+  return Math.floor(Math.random() * 4);
+};
 
-  winner = null;
+const computerSecretCode = () => {
+  game.secretCode.forEach((item, index) => {
+    if (item === null) {
+      game.secretCode.splice(index, 1, generateRandomCode());
+    }
+  });
+  return;
+};
 
-  render();
-}
-
-function main() {
+const main = () => {
   init();
-  render();
-}
+  computerSecretCode();
+};
 
 main();
+
+//Control flow:
+console.log("Computer Secret Code: " + game.secretCode);
