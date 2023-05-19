@@ -28,21 +28,41 @@ const gameMainBoard = document.querySelectorAll(".mainPegs > div");
 const gameSideBoard = document.querySelectorAll(".sidePegs > div");
 const gameMessage = document.querySelector("#gameMessage");
 
+const pegSelection = document.querySelectorAll(".selectionPegs > div");
+const redPeg = document.querySelector("#redPeg");
+const yellowPeg = document.querySelector("#yellowPeg");
+const bluePeg = document.querySelector("#bluePeg");
+const greenPeg = document.querySelector("#greenPeg");
+
 const checkSelection = document.querySelector("#check");
 
 /*----- event listeners -----*/
 
-// redPegSelection.addEventListener("click", handleRedPeg);
-// yellowPegSelection.addEventListener("click", handleYellowPeg);
-// bluePegSelection.addEventListener("click", handleBluePeg);
-// greenPegSelection.addEventListener("click", handleGreenPeg);
+const handleSelectionPegs = () => {
+  pegSelection.forEach((pegSelector) => {
+    pegSelector.addEventListener("click", (event) => {
+      if (event.target === redPeg) {
+        return console.log("Red Peg");
+      }
+
+      if (event.target === yellowPeg) {
+        return console.log("Yellow Peg");
+      }
+
+      if (event.target === bluePeg) {
+        return console.log("Blue Peg");
+      }
+
+      if (event.target === greenPeg) {
+        return console.log("Green Peg");
+      }
+    });
+  });
+};
+
+handleSelectionPegs();
 
 /*----- functions -----*/
-
-// function handleRedPeg(event) {
-//   let selectedPeg = renderMainPegs();
-//   selectedPeg.style.color = "red";
-// }
 
 const renderBoard = () => {
   gameMainBoard.innerHTML = "";
