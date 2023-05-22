@@ -26,6 +26,9 @@ const game = {
   boardMainPeg: [],
   boardSidePeg: [],
   playerSelection: [],
+  colIndex: 0,
+  rowIndex: 0,
+  turn: 0,
   message: "",
 };
 
@@ -55,26 +58,38 @@ checkSelection.addEventListener("click", handleCheckSelection);
 /*----- functions -----*/
 
 function handlePegSelection(event) {
-  if (game.playerSelection.length > 3) {
-    return;
-  }
+  // if (game.playerSelection.length > 3) {
+  //   return;
+  // }
 
   if (event.target === redPeg) {
+    reflectSelectedPegs(0);
     game.playerSelection.push(0);
   } else if (event.target === yellowPeg) {
+    reflectSelectedPegs(1);
     game.playerSelection.push(1);
   } else if (event.target === bluePeg) {
+    reflectSelectedPegs(2);
     game.playerSelection.push(2);
   } else if (event.target === greenPeg) {
+    reflectSelectedPegs(3);
     game.playerSelection.push(3);
   }
 
   console.log("Control Flow Peg Selection: " + game.playerSelection);
   console.log("Control flow Board Main Pegs: " + game.boardMainPeg);
+}
+
+function reflectSelectedPegs(selection) {
+  if (game.rowIndex > 3) {
+    game.colIndex += 1;
+    game.rowIndex = 0;
+  }
+
+  game.boardMainPeg[game.colIndex][game.rowIndex] = selection;
+  game.rowIndex += 1;
 
   renderBoard();
-
-  return reflectSelectedPegs();
 }
 
 function handleCheckSelection() {
