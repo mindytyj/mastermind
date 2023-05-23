@@ -83,10 +83,16 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   background-color: white;
   border-radius: 5%;
   margin: 10px;
-  padding: 10px;
+  padding: 20px;
+}
+
+p {
+  font-size: large;
+  font-family: fantasy;
 }
 
 .divContainer > .selectionPegs {
@@ -120,6 +126,7 @@ main {
   color: lawngreen;
 }
 
-.buttons {
-  width: fit-content;
+#gameMessage {
+  margin: 10px;
+  padding: 20px;
 }
