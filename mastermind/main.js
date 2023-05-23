@@ -20,6 +20,12 @@ const MAIN_COLOURS = {
   null: "white",
 };
 
+const SIDE_COLOURS = {
+  black: "black",
+  red: "red",
+  null: "white",
+};
+
 /*----- state variables -----*/
 const game = {
   secretCode: [],
@@ -28,7 +34,8 @@ const game = {
   playerSelection: [],
   colIndex: 0,
   rowIndex: 0,
-  turn: 0,
+  sideColIndex: 0,
+  sideRowIndex: 0,
   message: "",
 };
 
@@ -44,6 +51,7 @@ const bluePeg = document.querySelector("#bluePeg");
 const greenPeg = document.querySelector("#greenPeg");
 
 const checkSelection = document.querySelector("#check");
+const resetGame = document.querySelector("#resetGame");
 
 /*----- event listeners -----*/
 
@@ -54,13 +62,14 @@ const selectionPegs = () => {
 };
 
 checkSelection.addEventListener("click", handleCheckSelection);
+resetGame.addEventListener("click", handleResetGame);
 
 /*----- functions -----*/
 
 function handlePegSelection(event) {
-  // if (game.playerSelection.length > 3) {
-  //   return;
-  // }
+  if (game.playerSelection.length > 3) {
+    return;
+  }
 
   if (event.target === redPeg) {
     reflectSelectedPegs(0);
@@ -82,14 +91,13 @@ function handlePegSelection(event) {
 
 function reflectSelectedPegs(selection) {
   if (game.rowIndex > 3) {
-    game.colIndex += 1;
     game.rowIndex = 0;
   }
 
   game.boardMainPeg[game.colIndex][game.rowIndex] = selection;
   game.rowIndex += 1;
 
-  renderBoard();
+  renderMainBoard();
 }
 
 function handleCheckSelection() {
@@ -101,44 +109,67 @@ function handleCheckSelection() {
   return winningConditions();
 }
 
-const winningConditions = () => {
+function winningConditions() {
   if (
-    game.playerSelection === game.secretCode ||
-    game.boardMainPeg.length > 10
+    (game.playerSelection[0] === game.secretCode[0] &&
+      game.playerSelection[1] === game.secretCode[1] &&
+      game.playerSelection[2] === game.secretCode[2] &&
+      game.playerSelection[3] === game.secretCode[3]) ||
+    game.colIndex > 9
   ) {
     return winningMessage();
   }
 
-  console.log(
-    "Player Selection: " +
-      console.log(game.playerSelection) +
-      " Game Main Board: " +
-      game.boardMainPeg
-  );
-
   return toggleSidePegs();
-};
+}
 
-const winningMessage = () => {
-  gameMessage.classList.remove(".hide");
+function toggleSidePegs() {
+  return handleNextTurn();
+}
 
-  if (game.playerSelection === game.secretCode) {
+function handleNextTurn() {
+  game.playerSelection.splice(0, 4);
+  game.colIndex += 1;
+  game.sideColIndex += 1;
+
+  if (game.sideColIndex === 10) {
+    return winningConditions();
+  }
+}
+
+function handleResetGame() {
+  game.colIndex = 0;
+  game.rowIndex = 0;
+  game.sideColIndex = 0;
+  game.sideRowIndex = 0;
+  game.message = "";
+  main();
+  console.log("Reset Game Secret Code: " + game.secretCode);
+}
+
+function winningMessage() {
+  if (
+    game.playerSelection[0] === game.secretCode[0] &&
+    game.playerSelection[1] === game.secretCode[1] &&
+    game.playerSelection[2] === game.secretCode[2] &&
+    game.playerSelection[3] === game.secretCode[3]
+  ) {
     game.message = "Congratulations! You have guessed the secret code!";
     console.log("Congratulations! You have guessed the secret code!");
-    return game.message;
-  } else if (game.boardMainPeg.length > 10) {
+  } else if (game.colIndex > 9) {
     game.message =
-      "You did not guess the secret code. Reset the game to try again!";
+      "You did not guess the secret code! Reset the game to try again!";
     console.log(
       "You did not guess the secret code. Reset the game to try again!"
     );
-    return game.message;
   }
-};
 
-const renderBoard = () => {
+  renderMessage();
+  return game.message;
+}
+
+function renderMainBoard() {
   gameMainBoard.innerHTML = "";
-  gameSideBoard.innerHTML = "";
 
   game.boardMainPeg.forEach(function (colArr, colIndex) {
     colArr.forEach(function (colorValue, rowIndex) {
@@ -147,22 +178,35 @@ const renderBoard = () => {
       selectedPeg.style.color = MAIN_COLOURS[colorValue];
     });
   });
+}
 
-  gameSideBoard.forEach((sidePeg) => {
-    sidePeg.style.color = "white";
+function renderSideBoard() {
+  gameSideBoard.innerHTML = "";
+
+  game.boardSidePeg.forEach(function (colArr, colIndex) {
+    colArr.forEach(function (colorValue, rowIndex) {
+      const sidePegId = `side${colIndex}row${rowIndex}`;
+      const selectedSidePeg = document.getElementById(sidePegId);
+      selectedSidePeg.style.color = SIDE_COLOURS[colorValue];
+    });
   });
-};
+}
 
-const renderMessage = () => {
+function renderBoard() {
+  renderMainBoard();
+  renderSideBoard();
+}
+
+function renderMessage() {
   gameMessage.innerText = game.message;
-};
+}
 
-const render = () => {
+function render() {
   renderBoard();
   renderMessage();
-};
+}
 
-const init = () => {
+function init() {
   game.secretCode = [null, null, null, null];
 
   game.boardMainPeg = [
@@ -192,27 +236,27 @@ const init = () => {
   ];
 
   game.playerSelection = [];
-};
+}
 
-const generateRandomCode = () => {
+function generateRandomCode() {
   return Math.floor(Math.random() * 4);
-};
+}
 
-const computerSecretCode = () => {
+function computerSecretCode() {
   game.secretCode.forEach((item, index) => {
     if (item === null) {
       game.secretCode.splice(index, 1, generateRandomCode());
     }
   });
-  return;
-};
+}
 
-const main = () => {
+function main() {
   init();
   computerSecretCode();
   selectionPegs();
+  winningMessage();
   render();
-};
+}
 
 main();
 
