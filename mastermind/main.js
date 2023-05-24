@@ -17,7 +17,7 @@ const SIDE_COLOURS = {
 
 /*----- state variables -----*/
 const game = {
-  screen: "",
+  screen: "startScreen",
   secretCode: [],
   boardMainPeg: [],
   boardSidePeg: [],
@@ -34,6 +34,7 @@ const game = {
 const gameMainBoard = document.querySelectorAll(".mainPegs > div");
 const gameSideBoard = document.querySelectorAll(".sidePegs > div");
 const gameMessage = document.querySelector("#gameMessage");
+const gameRulesInfo = document.querySelector("#gameRulesInfo");
 
 const startScreen = document.querySelector("#startScreen");
 const gameScreen = document.querySelector("#gameScreen");
@@ -50,6 +51,8 @@ const orangePeg = document.querySelector("#orangePeg");
 
 const startButton = document.querySelector("#startButton");
 const checkSelection = document.querySelector("#check");
+const gameRulesButton = document.querySelector("#gameRules");
+const hideGameRules = document.querySelector("#hideGameRules");
 const resetGame = document.querySelector("#resetGame");
 
 /*----- event listeners -----*/
@@ -62,6 +65,8 @@ const selectionPegs = () => {
 
 startButton.addEventListener("click", handleGameStart);
 checkSelection.addEventListener("click", handleCheckSelection);
+gameRulesButton.addEventListener("click", handleGameRules);
+hideGameRules.addEventListener("click", handleHideGameRules);
 resetGame.addEventListener("click", handleResetGame);
 
 /*----- functions -----*/
@@ -69,6 +74,14 @@ resetGame.addEventListener("click", handleResetGame);
 function handleGameStart() {
   game.screen = "gameScreen";
   renderScreen();
+}
+
+function handleGameRules() {
+  gameRulesInfo.classList.remove("hide");
+}
+
+function handleHideGameRules() {
+  gameRulesInfo.classList.add("hide");
 }
 
 function handlePegSelection(event) {
@@ -173,15 +186,15 @@ function handleNextTurn() {
 
 function winningMessage() {
   if (game.winner === "Win") {
-    game.message = "Congratulations! You have guessed the secret code!";
+    game.screen = "resetGameScreen";
+    game.message = "Wahoooo! You correctly guessed Masterio's secret code!";
   } else if (game.winner === "Lose") {
+    game.screen = "resetGameScreen";
     game.message =
-      "You did not guess the secret code! Reset the game to try again!";
+      "Oh no! You did not guess Masterio's secret code! It's-a okay to reset and try again!";
   }
 
-  game.screen = "resetGameScreen";
   renderScreen();
-
   renderMessage();
   return game.message;
 }
@@ -198,22 +211,17 @@ function handleResetGame() {
 }
 
 function renderScreen() {
-  if (game.screen === "startScreen") {
-    startScreen.classList.remove("hide");
-    resetGameScreen.classList.add("hide");
-  }
+  startScreen.classList.add("hide");
+  gameScreen.classList.add("hide");
+  resetGameScreen.classList.add("hide");
 
   if (game.screen === "gameScreen") {
-    startScreen.classList.add("hide");
-    gameScreen.classList.remove("hide");
     gamePanel.classList.remove("hide");
+  } else if (game.screen !== "gameScreen") {
+    gamePanel.classList.add("hide");
   }
 
-  if (game.screen === "resetGameScreen") {
-    gameScreen.classList.add("hide");
-    gamePanel.classList.add("hide");
-    resetGameScreen.classList.remove("hide");
-  }
+  document.querySelector(`#${game.screen}`).classList.remove("hide");
 }
 
 function renderMainBoard() {
