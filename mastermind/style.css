@@ -1,47 +1,52 @@
-header {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  height: 30px;
-  padding: 15px;
-  background-color: lightsteelblue;
-}
-
-header > div {
-  justify-content: flex-end;
-  flex-direction: row;
-  color: white;
-}
-
 body {
-  margin: 0;
+  background-image: url("/public/images/gameBG.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: crimson;
   display: grid;
   grid-template-rows: auto;
-  background-color: slategray;
 }
 
 main {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin: 30px;
-  gap: 100px;
   height: 100vh;
-  grid-template-columns: 2fr 1fr;
+}
+
+#startScreen > div > div {
+  border: 2px solid;
+  border-color: red;
+  border-radius: 10px;
+}
+
+#startScreen > div > div > div {
+  background-image: var(--bs-gradient);
+  border: 2px solid;
+  border-color: blue;
+  text-align: center;
+}
+
+h1 {
+  border: 20px;
+  padding: 10px;
+}
+
+h3 {
+  border: 20px;
+  padding: 20px;
+}
+
+#startButton {
+  border: 20px;
 }
 
 #gameBoard {
-  display: grid;
-  grid-template-rows: 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px;
-  align-content: center;
-  background-color: darkslategrey;
+  background-image: var(--bs-gradient);
   border: 2px solid;
   border-radius: 8%;
-  border-color: lightgrey;
-  width: 500px;
-  padding: 10px;
-  gap: 25px;
+  border-color: red;
+  height: fit-content;
 }
 
 #gameBoard > div {
@@ -49,7 +54,7 @@ main {
   grid-template-columns: 100px 300px;
   justify-content: center;
   align-content: center;
-  padding: 20px;
+  padding: 15px;
   gap: 25px;
 }
 
@@ -85,48 +90,59 @@ main {
   justify-content: center;
   align-items: center;
   background-color: white;
-  border-radius: 5%;
-  margin: 10px;
+  border-radius: 2%;
+  margin: 25px;
   padding: 20px;
-}
-
-p {
-  font-size: large;
-  font-family: fantasy;
 }
 
 .divContainer > .selectionPegs {
   display: grid;
-  grid-template-columns: auto auto auto auto;
+  grid-template-columns: auto auto auto auto auto auto;
   justify-content: center;
   gap: 10px;
+  margin: 20px;
 }
 
 #redPeg {
   border-radius: 50%;
   border: 20px solid;
-  color: red;
-}
-
-#yellowPeg {
-  border-radius: 50%;
-  border: 20px solid;
-  color: yellow;
-}
-
-#bluePeg {
-  border-radius: 50%;
-  border: 20px solid;
-  color: blue;
+  color: rgb(225, 18, 15);
 }
 
 #greenPeg {
   border-radius: 50%;
   border: 20px solid;
-  color: lawngreen;
+  color: rgb(9, 169, 55);
 }
 
-#gameMessage {
-  margin: 10px;
+#pinkPeg {
+  border-radius: 50%;
+  border: 20px solid;
+  color: rgb(240, 150, 189);
+}
+
+#bluePeg {
+  border-radius: 50%;
+  border: 20px solid;
+  color: rgb(24, 65, 154);
+}
+
+#yellowPeg {
+  border-radius: 50%;
+  border: 20px solid;
+  color: rgb(248, 190, 16);
+}
+
+#orangePeg {
+  border-radius: 50%;
+  border: 20px solid;
+  color: rgb(238, 131, 12);
+}
+
+.Buttons {
   padding: 20px;
+}
+
+.hide {
+  display: none;
 }
