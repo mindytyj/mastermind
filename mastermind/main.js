@@ -1,16 +1,3 @@
-/* Gameplay
-1. Computer to generate a random secret code
-2. Player to select the colour pegs
-2.1 Selected colour pegs will push into player selection board array and reflect on the main peg board
-2.2 Player to click on the check button once 4 coloured pegs are selected
-2.3 Check button to check for winning conditions
-3. If player's coloured pegs includes the colour but is in the wrong position, side peg to turn black.
-3.1 If player's coloured pegs is the right colour in the right position, side peg to turn red
-4. Player to continue the game until winning condition is met or guess is more than 10.
-5. Once player wins/lose, output div to unhide gameMessage class and winning message is reflected to player
-6. Player to click on reset game button to reset the game board, game message and secret code.
-*/
-
 /*----- constants -----*/
 const MAIN_COLOURS = {
   0: "red",
@@ -36,6 +23,7 @@ const game = {
   rowIndex: 0,
   sideColIndex: 0,
   sideRowIndex: 0,
+  winner: "",
   message: "",
 };
 
@@ -84,9 +72,6 @@ function handlePegSelection(event) {
     reflectSelectedPegs(3);
     game.playerSelection.push(3);
   }
-
-  console.log("Control Flow Peg Selection: " + game.playerSelection);
-  console.log("Control flow Board Main Pegs: " + game.boardMainPeg);
 }
 
 function reflectSelectedPegs(selection) {
@@ -105,18 +90,20 @@ function handleCheckSelection() {
     return;
   }
 
-  console.log("Control Flow Check Selection: " + game.playerSelection);
   return winningConditions();
 }
 
 function winningConditions() {
   if (
-    (game.playerSelection[0] === game.secretCode[0] &&
-      game.playerSelection[1] === game.secretCode[1] &&
-      game.playerSelection[2] === game.secretCode[2] &&
-      game.playerSelection[3] === game.secretCode[3]) ||
-    game.colIndex > 9
+    game.playerSelection[0] === game.secretCode[0] &&
+    game.playerSelection[1] === game.secretCode[1] &&
+    game.playerSelection[2] === game.secretCode[2] &&
+    game.playerSelection[3] === game.secretCode[3]
   ) {
+    game.winner = "Win";
+    return winningMessage();
+  } else if (game.colIndex > 9) {
+    game.winner = "Lose";
     return winningMessage();
   }
 
@@ -124,7 +111,31 @@ function winningConditions() {
 }
 
 function toggleSidePegs() {
-  return handleNextTurn();
+  if (game.sideRowIndex > 3) {
+    game.sideRowIndex = 0;
+    return handleNextTurn();
+  }
+
+  return sidePegConditions();
+}
+
+function sidePegConditions() {
+  game.playerSelection.forEach((item, index) => {
+    if (item === game.secretCode[index]) {
+      game.boardSidePeg[game.sideColIndex][game.sideRowIndex] =
+        SIDE_COLOURS.red;
+      game.sideRowIndex += 1;
+    } else if (game.secretCode.indexOf(item) !== -1) {
+      game.boardSidePeg[game.sideColIndex][game.sideRowIndex] =
+        SIDE_COLOURS.black;
+      game.sideRowIndex += 1;
+    } else if (game.secretCode.indexOf(item) === -1) {
+      game.sideRowIndex += 1;
+    }
+  });
+
+  renderSideBoard();
+  return toggleSidePegs();
 }
 
 function handleNextTurn() {
@@ -137,35 +148,26 @@ function handleNextTurn() {
   }
 }
 
+function winningMessage() {
+  if (game.winner === "Win") {
+    game.message = "Congratulations! You have guessed the secret code!";
+  } else if (game.winner === "Lose") {
+    game.message =
+      "You did not guess the secret code! Reset the game to try again!";
+  }
+
+  renderMessage();
+  return game.message;
+}
+
 function handleResetGame() {
   game.colIndex = 0;
   game.rowIndex = 0;
   game.sideColIndex = 0;
   game.sideRowIndex = 0;
+  game.winner = "";
   game.message = "";
   main();
-  console.log("Reset Game Secret Code: " + game.secretCode);
-}
-
-function winningMessage() {
-  if (
-    game.playerSelection[0] === game.secretCode[0] &&
-    game.playerSelection[1] === game.secretCode[1] &&
-    game.playerSelection[2] === game.secretCode[2] &&
-    game.playerSelection[3] === game.secretCode[3]
-  ) {
-    game.message = "Congratulations! You have guessed the secret code!";
-    console.log("Congratulations! You have guessed the secret code!");
-  } else if (game.colIndex > 9) {
-    game.message =
-      "You did not guess the secret code! Reset the game to try again!";
-    console.log(
-      "You did not guess the secret code. Reset the game to try again!"
-    );
-  }
-
-  renderMessage();
-  return game.message;
 }
 
 function renderMainBoard() {
@@ -259,6 +261,3 @@ function main() {
 }
 
 main();
-
-//Control flow:
-console.log("Computer Secret Code: " + game.secretCode);
