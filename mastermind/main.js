@@ -1,9 +1,11 @@
 /*----- constants -----*/
 const MAIN_COLOURS = {
-  0: "red",
-  1: "yellow",
-  2: "blue",
-  3: "green",
+  0: "rgb(225, 18, 15)",
+  1: "rgb(9, 169, 55)",
+  2: "rgb(240, 150, 189)",
+  3: "rgb(24, 65, 154)",
+  4: "rgb(248, 190, 16)",
+  5: "rgb(238, 131, 12)",
   null: "white",
 };
 
@@ -15,6 +17,7 @@ const SIDE_COLOURS = {
 
 /*----- state variables -----*/
 const game = {
+  screen: "",
   secretCode: [],
   boardMainPeg: [],
   boardSidePeg: [],
@@ -32,12 +35,20 @@ const gameMainBoard = document.querySelectorAll(".mainPegs > div");
 const gameSideBoard = document.querySelectorAll(".sidePegs > div");
 const gameMessage = document.querySelector("#gameMessage");
 
+const startScreen = document.querySelector("#startScreen");
+const gameScreen = document.querySelector("#gameScreen");
+const gamePanel = document.querySelector("#gamePanel");
+const resetGameScreen = document.querySelector("#resetGameScreen");
+
 const pegSelection = document.querySelectorAll(".selectionPegs > div");
 const redPeg = document.querySelector("#redPeg");
-const yellowPeg = document.querySelector("#yellowPeg");
-const bluePeg = document.querySelector("#bluePeg");
 const greenPeg = document.querySelector("#greenPeg");
+const pinkPeg = document.querySelector("#pinkPeg");
+const bluePeg = document.querySelector("#bluePeg");
+const yellowPeg = document.querySelector("#yellowPeg");
+const orangePeg = document.querySelector("#orangePeg");
 
+const startButton = document.querySelector("#startButton");
 const checkSelection = document.querySelector("#check");
 const resetGame = document.querySelector("#resetGame");
 
@@ -49,10 +60,16 @@ const selectionPegs = () => {
   });
 };
 
+startButton.addEventListener("click", handleGameStart);
 checkSelection.addEventListener("click", handleCheckSelection);
 resetGame.addEventListener("click", handleResetGame);
 
 /*----- functions -----*/
+
+function handleGameStart() {
+  game.screen = "gameScreen";
+  renderScreen();
+}
 
 function handlePegSelection(event) {
   if (game.playerSelection.length > 3) {
@@ -62,15 +79,21 @@ function handlePegSelection(event) {
   if (event.target === redPeg) {
     reflectSelectedPegs(0);
     game.playerSelection.push(0);
-  } else if (event.target === yellowPeg) {
+  } else if (event.target === greenPeg) {
     reflectSelectedPegs(1);
     game.playerSelection.push(1);
-  } else if (event.target === bluePeg) {
+  } else if (event.target === pinkPeg) {
     reflectSelectedPegs(2);
     game.playerSelection.push(2);
-  } else if (event.target === greenPeg) {
+  } else if (event.target === bluePeg) {
     reflectSelectedPegs(3);
     game.playerSelection.push(3);
+  } else if (event.target === yellowPeg) {
+    reflectSelectedPegs(4);
+    game.playerSelection.push(4);
+  } else if (event.target === orangePeg) {
+    reflectSelectedPegs(5);
+    game.playerSelection.push(5);
   }
 }
 
@@ -156,11 +179,15 @@ function winningMessage() {
       "You did not guess the secret code! Reset the game to try again!";
   }
 
+  game.screen = "resetGameScreen";
+  renderScreen();
+
   renderMessage();
   return game.message;
 }
 
 function handleResetGame() {
+  game.screen = "startScreen";
   game.colIndex = 0;
   game.rowIndex = 0;
   game.sideColIndex = 0;
@@ -168,6 +195,25 @@ function handleResetGame() {
   game.winner = "";
   game.message = "";
   main();
+}
+
+function renderScreen() {
+  if (game.screen === "startScreen") {
+    startScreen.classList.remove("hide");
+    resetGameScreen.classList.add("hide");
+  }
+
+  if (game.screen === "gameScreen") {
+    startScreen.classList.add("hide");
+    gameScreen.classList.remove("hide");
+    gamePanel.classList.remove("hide");
+  }
+
+  if (game.screen === "resetGameScreen") {
+    gameScreen.classList.add("hide");
+    gamePanel.classList.add("hide");
+    resetGameScreen.classList.remove("hide");
+  }
 }
 
 function renderMainBoard() {
@@ -204,6 +250,7 @@ function renderMessage() {
 }
 
 function render() {
+  renderScreen();
   renderBoard();
   renderMessage();
 }
@@ -241,7 +288,7 @@ function init() {
 }
 
 function generateRandomCode() {
-  return Math.floor(Math.random() * 4);
+  return Math.floor(Math.random() * 6);
 }
 
 function computerSecretCode() {
