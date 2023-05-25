@@ -57,11 +57,11 @@ const resetGame = document.querySelector("#resetGame");
 
 /*----- event listeners -----*/
 
-const selectionPegs = () => {
+function selectionPegs() {
   pegSelection.forEach((pegSelector) => {
     pegSelector.addEventListener("click", handlePegSelection);
   });
-};
+}
 
 startButton.addEventListener("click", handleGameStart);
 checkSelection.addEventListener("click", handleCheckSelection);
@@ -226,6 +226,8 @@ function renderScreen() {
 
 function renderMainBoard() {
   gameMainBoard.innerHTML = "";
+
+  // Reference to Unit 1 Week 1 Day 5 Connect Four Code Along Lab
 
   game.boardMainPeg.forEach(function (colArr, colIndex) {
     colArr.forEach(function (colorValue, rowIndex) {
