@@ -225,8 +225,6 @@ function renderScreen() {
 }
 
 function renderMainBoard() {
-  gameMainBoard.innerHTML = "";
-
   // Reference to Unit 1 Week 1 Day 5 Connect Four Code Along Lab
 
   game.boardMainPeg.forEach(function (colArr, colIndex) {
@@ -239,8 +237,6 @@ function renderMainBoard() {
 }
 
 function renderSideBoard() {
-  gameSideBoard.innerHTML = "";
-
   game.boardSidePeg.forEach(function (colArr, colIndex) {
     colArr.forEach(function (colorValue, rowIndex) {
       const sidePegId = `side${colIndex}row${rowIndex}`;
