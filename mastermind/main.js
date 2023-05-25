@@ -179,7 +179,7 @@ function handleNextTurn() {
   game.colIndex += 1;
   game.sideColIndex += 1;
 
-  if (game.sideColIndex === 10) {
+  if (game.colIndex === 10) {
     return winningConditions();
   }
 }
